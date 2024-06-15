@@ -1,84 +1,73 @@
-// Este código define um componente de tabela simples para exibir dados de usuários em uma grade.
-// Ele utiliza o Material-UI para os componentes de tabela e styled-components para estilos personalizados.
-
 import React from 'react';
 import styled from 'styled-components';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
+import { TableContainer, Paper } from '@mui/material';
 
-// Estilos personalizados para a tabela simples
-const SimpleGridTable = styled(Table)`
+// Estilos personalizados para a tabela
+const StyledContainer = styled(TableContainer)`
   width: 100%;
-  border-radius: 10px;
+  border-radius: 15px;
   overflow: hidden;
-  border: 1px solid #ccc;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
 `;
 
-// Estilo para o cabeçalho da tabela
-const Th = styled(TableCell)`
-  text-align: start;
-  border-bottom: 2px solid #ccc;
-  padding: 10px 15px;
-  font-weight: bold;
-  font-size: 16px;
-  color: #333;
+const StyledTable = styled.ul`
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
 `;
 
-// Estilo para as células da tabela
-const Td = styled(TableCell)`
+const StyledTableRow = styled.li`
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
   padding: 15px;
-  text-align: ${(props) => (props.alignCenter ? 'center' : 'start')};
-  width: ${(props) => (props.width ? props.width : 'auto')};
+  background-color: ${(props) => (props.index % 2 === 0 ? "#f9f9f9" : "#fff")};
+  border-bottom: 1px solid #eee;
+  align-items: center;
+`;
+
+const StyledTableCell = styled.div`
+  text-align: ${(props) => (props.alignCenter ? "center" : "start")};
   font-size: 14px;
   color: #555;
 `;
 
-// Estilo para as linhas da tabela
-const StyledTableRow = styled(TableRow)`
-  background-color: ${(props) => {
-    switch (props.index % 3) {
-      case 0:
-        return '#f5f5f5'; // Cinza claro
-      case 1:
-        return '#e0e0e0'; // Cinza médio claro
-      default:
-        return '#fff'; // Branco
-    }
-  }};
+const TableHeader = styled(StyledTableRow)`
+  background-color: #aeafa1;
+  color: #fff;
+  font-weight: bold;
+  text-transform: uppercase;
 `;
 
-// Componente de Tabela Simples para exibir os dados dos usuários
 const SimpleGrid = ({ users }) => {
   // Função para formatar a data no formato local
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString(); 
+    return date.toLocaleDateString();
   };
 
   return (
-    <TableContainer component={Paper} sx={{ mt: 4 }}>
-      <SimpleGridTable>
-        <TableHead>
-          <TableRow>
-            <Th>Nome</Th>
-            <Th>CPF</Th>
-            <Th>Procedimento</Th>
-            <Th>Horário</Th>
-            <Th>Data</Th>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {users.map((item, i) => (
-            <StyledTableRow key={i} index={i}>
-              <Td>{item.nome}</Td>
-              <Td>{item.cpf}</Td>
-              <Td>{item.combo}</Td>
-              <Td>{item.horario}</Td>
-              <Td>{formatDate(item.data_agendamento)}</Td>
-            </StyledTableRow>
-          ))}
-        </TableBody>
-      </SimpleGridTable>
-    </TableContainer>
+    <StyledContainer component={Paper} sx={{ mt: 4 }}>
+      <StyledTable>
+        <TableHeader>
+          <StyledTableCell>Nome</StyledTableCell>
+          <StyledTableCell>CPF</StyledTableCell>
+          <StyledTableCell>Procedimento</StyledTableCell>
+          <StyledTableCell>Horário</StyledTableCell>
+          <StyledTableCell>Data</StyledTableCell>
+        </TableHeader>
+        {users.map((item, i) => (
+          <StyledTableRow key={i} index={i}>
+            <StyledTableCell>{item.nome}</StyledTableCell>
+            <StyledTableCell>{item.cpf}</StyledTableCell>
+            <StyledTableCell>{item.combo}</StyledTableCell>
+            <StyledTableCell>{item.horario}</StyledTableCell>
+            <StyledTableCell>{formatDate(item.data_agendamento)}</StyledTableCell>
+          </StyledTableRow>
+        ))}
+      </StyledTable>
+    </StyledContainer>
   );
 };
 

@@ -11,6 +11,7 @@ const DashContainer = styled.div`
   align-items: center;
   height: 100vh;
   overflow: hidden;
+  position: relative;
 `;
 
 const VideoBackground = styled.video`
@@ -24,20 +25,23 @@ const VideoBackground = styled.video`
 `;
 
 const ContentContainer = styled.div`
-  background-color: rgba(255, 255, 255, 0.9); 
+  display: flex;
+  gap: 20px;
+`;
+
+const Container = styled.div`
+  background-color: rgba(255, 255, 255, 0.9);
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
   text-align: center;
 `;
 
 const Title = styled.h2`
   margin-bottom: 20px;
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: space-around;
+  font-family: 'Arial', sans-serif;
+  font-size: 36px;
+  font-weight: bold;
 `;
 
 const Button = styled(Link)`
@@ -49,11 +53,24 @@ const Button = styled(Link)`
   font-weight: bold;
   text-decoration: none;
   cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease;
-
+  transition: background 0.3s ease, color 0.3s ease;
+  
   &:hover {
-    background-color: #2E8B57;
     color: white;
+  }
+`;
+
+const Button1 = styled(Button)`
+  background: linear-gradient(45deg, blue, yellow);
+  &:hover {
+    background: linear-gradient(45deg, yellow, blue);
+  }
+`;
+
+const Button2 = styled(Button)`
+  background: linear-gradient(45deg, purple, green);
+  &:hover {
+    background: linear-gradient(45deg, green, purple);
   }
 `;
 
@@ -65,15 +82,14 @@ const Dash = () => {
         Your browser does not support the video tag.
       </VideoBackground>
       <ContentContainer>
-        <Title>DashBoard</Title>
-        <ButtonContainer>
-          <Button to="/app" style={{ backgroundColor: '#2E8B57', color: 'white' }}>
-            Cadastro de Pedidos
-          </Button>
-          <Button to="/Combo" style={{ backgroundColor: '#90EE90', color: '#333' }}>
-            Seleção de Pedidos
-          </Button>
-        </ButtonContainer>
+        <Container>
+          <Title>Cadastro de Pedidos</Title>
+          <Button1 to="/app">Cadastro de Pedidos</Button1>
+        </Container>
+        <Container>
+          <Title>Seleção de Pedidos</Title>
+          <Button2 to="/Combo">Seleção de Pedidos</Button2>
+        </Container>
       </ContentContainer>
     </DashContainer>
   );

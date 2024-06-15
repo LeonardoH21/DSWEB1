@@ -1,53 +1,52 @@
-// Este código define um componente de tabela para exibir e interagir com os registros de usuários.
-// Ele utiliza Material-UI para os componentes de tabela e react-icons para os ícones de edição e exclusão.
-
 import React from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  IconButton,
-} from "@mui/material";
+import { IconButton } from "@mui/material";
 import { FaTrash, FaEdit } from "react-icons/fa";
 import styled from "styled-components";
 
 // Estilos personalizados para a tabela
-const StyledTable = styled(Table)`
+const TableContainer = styled.div`
   width: 100%;
-  border-radius: 10px;
+  border-radius: 15px;
   overflow: hidden;
-  border: 1px solid #ccc;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+`;
+
+// Lista estilizada
+const StyledTable = styled.ul`
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+`;
+
+// Item da lista estilizada
+const StyledTableRow = styled.li`
+  display: grid;
+  grid-template-columns: repeat(6, 1fr) auto auto;
+  gap: 10px;
+  padding: 15px;
+  background-color: ${(props) => (props.index % 2 === 0 ? "#f9f9f9" : "#fff")};
+  border-bottom: 1px solid #eee;
+  align-items: center;
 `;
 
 // Célula estilizada da tabela
-const StyledTableCell = styled(TableCell)`
-  padding: 15px;
+const StyledTableCell = styled.div`
   text-align: ${(props) => (props.alignCenter ? "center" : "start")};
   font-size: 14px;
   color: #555;
 `;
 
-// Linha estilizada da tabela
-const StyledTableRow = styled(TableRow)`
-  background-color: ${(props) => {
-    switch (props.index % 3) {
-      case 0:
-        return "#f5f5f5"; // Cinza claro
-      case 1:
-        return "#e0e0e0"; // Cinza médio claro
-      default:
-        return "#fff"; // Branco
-    }
-  }};
+// Título da tabela
+const TableHeader = styled(StyledTableRow)`
+  background-color: #aeafa1;
+  color: #fff;
+  font-weight: bold;
+  text-transform: uppercase;
 `;
 
-// Componente de Grid para exibir registros de usuários
 const Grid = ({ users, setUsers, setOnEdit }) => {
   // Função para lidar com a edição de um registro
   const handleEdit = (item) => {
@@ -77,40 +76,36 @@ const Grid = ({ users, setUsers, setOnEdit }) => {
   };
 
   return (
-    <TableContainer component={Paper} sx={{ mt: 4 }}>
+    <TableContainer>
       <StyledTable>
-        <TableHead>
-          <TableRow>
-            <StyledTableCell>Nome</StyledTableCell>
-            <StyledTableCell>CPF</StyledTableCell>
-            <StyledTableCell>Combos</StyledTableCell>
-            <StyledTableCell>Horário</StyledTableCell>
-            <StyledTableCell>Data</StyledTableCell>
-            <StyledTableCell align="center"></StyledTableCell>
-            <StyledTableCell align="center"></StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {users.map((item, i) => (
-            <StyledTableRow key={i} index={i}>
-              <StyledTableCell>{item.nome}</StyledTableCell>
-              <StyledTableCell>{item.cpf}</StyledTableCell>
-              <StyledTableCell>{item.combo}</StyledTableCell>
-              <StyledTableCell>{item.horario}</StyledTableCell>
-              <StyledTableCell>{formatDate(item.data_agendamento)}</StyledTableCell>
-              <StyledTableCell align="center">
-                <IconButton onClick={() => handleEdit(item)}>
-                  <FaEdit />
-                </IconButton>
-              </StyledTableCell>
-              <StyledTableCell align="center">
-                <IconButton onClick={() => handleDelete(item.id)}>
-                  <FaTrash />
-                </IconButton>
-              </StyledTableCell>
-            </StyledTableRow>
-          ))}
-        </TableBody>
+        <TableHeader>
+          <StyledTableCell>Nome</StyledTableCell>
+          <StyledTableCell>CPF</StyledTableCell>
+          <StyledTableCell>Combos</StyledTableCell>
+          <StyledTableCell>Horário</StyledTableCell>
+          <StyledTableCell>Data</StyledTableCell>
+          <StyledTableCell alignCenter></StyledTableCell>
+          <StyledTableCell alignCenter></StyledTableCell>
+        </TableHeader>
+        {users.map((item, i) => (
+          <StyledTableRow key={i} index={i}>
+            <StyledTableCell>{item.nome}</StyledTableCell>
+            <StyledTableCell>{item.cpf}</StyledTableCell>
+            <StyledTableCell>{item.combo}</StyledTableCell>
+            <StyledTableCell>{item.horario}</StyledTableCell>
+            <StyledTableCell>{formatDate(item.data_agendamento)}</StyledTableCell>
+            <StyledTableCell alignCenter>
+              <IconButton onClick={() => handleEdit(item)}>
+                <FaEdit />
+              </IconButton>
+            </StyledTableCell>
+            <StyledTableCell alignCenter>
+              <IconButton onClick={() => handleDelete(item.id)}>
+                <FaTrash />
+              </IconButton>
+            </StyledTableCell>
+          </StyledTableRow>
+        ))}
       </StyledTable>
     </TableContainer>
   );

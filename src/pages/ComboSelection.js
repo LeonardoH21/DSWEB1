@@ -1,13 +1,8 @@
-// Este código é responsável por definir a estrutura da página de seleção de combos,
-// incluindo componentes para busca de combos, exibição de resultados de busca e 
-// exibição de todos os registros. Ele utiliza styled-components para estilização.
-
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import ComboSearch from '../components/ComboSearch';
 import Grid from '../components/SimpleGrid';
 import axios from 'axios';
-import Typography from '@mui/material/Typography';
 
 // Definição do container principal com estilos
 const Container = styled.div`
@@ -16,28 +11,34 @@ const Container = styled.div`
   margin-top: 20px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  background-color: #999494;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  gap: 10px; /* Ajuste do gap */
+  background-color: #f5f5f5;
+  padding: 10px; /* Ajuste do padding */
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   margin-left: auto;
   margin-right: auto;
-  color: #000; /* Texto preto */
-  font-family: 'Arial', sans-serif;
+  color: #333;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
 `;
 
 // Definição do cabeçalho com estilos
 const Header = styled.div`
   display: flex;
   justify-content: center;
-  color: #000; /* Texto preto */
+  color: #f3f3f3;
+  font-size: 24px;
+  font-weight: bold;
+  background-color: #444;
+  padding: 10px; /* Ajuste do padding */
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 `;
 
 // Definição do conteúdo principal com estilos
 const Content = styled.div`
   display: flex;
-  gap: 20px;
+  gap: 10px; /* Ajuste do gap */
   width: 100%;
 `;
 
@@ -46,7 +47,11 @@ const LeftPane = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 10px; /* Ajuste do gap */
+  background-color: #fff;
+  padding: 10px; /* Ajuste do padding */
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 `;
 
 // Definição do painel direito com estilos
@@ -54,19 +59,31 @@ const RightPane = styled.div`
   flex: 2;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 10px; /* Ajuste do gap */
+  background-color: #fff;
+  padding: 10px; /* Ajuste do padding */
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 `;
 
-// Título do grid com estilos
-const GridTitle = styled.h3`
-  color: #fff; /* Texto branco */
+// Título do grid com fundo
+const GridTitleWithBackground = styled.h3`
+  color: #333;
   text-align: center;
   font-size: 1.5rem;
   font-weight: bold;
-  font-family: 'Arial', sans-serif;
-  background-color: #4d4b4b7d; /* Fundo preto claro transparente */
   padding: 10px;
-  border-radius: 5px;
+  font-family: 'Arial', sans-serif;
+`;
+
+// Título do grid sem fundo
+const GridTitleNoBackground = styled.h3`
+  color: #333;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding: 10px;
+  font-family: 'Arial', sans-serif;
 `;
 
 const ComboSelection = () => {
@@ -90,18 +107,16 @@ const ComboSelection = () => {
 
   return (
     <Container>
-      <Header>
-        <GridTitle>Bem Vindo a Seleção de Combos</GridTitle>
-      </Header>
+      <Header>Bem Vindo à Seleção de Combos</Header>
       <Content>
         <LeftPane>
-          <GridTitle>Escreva o Combo/Data</GridTitle>
+          <GridTitleWithBackground>Escreva o Combo/Data</GridTitleWithBackground>
           <ComboSearch setUsers={setUsers} />
         </LeftPane>
         <RightPane>
-          <GridTitle>Resultados da Pesquisa</GridTitle>
+          <GridTitleNoBackground>Resultados da Pesquisa</GridTitleNoBackground>
           <Grid users={users} setUsers={setUsers} setOnEdit={() => {}} />
-          <GridTitle>Todos os Registros</GridTitle>
+          <GridTitleNoBackground>Todos os Registros</GridTitleNoBackground>
           <Grid users={allUsers} setUsers={setAllUsers} setOnEdit={() => {}} />
         </RightPane>
       </Content>
